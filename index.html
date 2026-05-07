@@ -59,10 +59,40 @@
             margin: 0 5px;
             font-size: 1.2rem;
         }
+        .dark-mode {
+    background-color: #0f172a !important;
+    color: white !important;
+}
+
+.dark-mode nav {
+    background-color: #111827 !important;
+}
+
+.dark-mode .glass-card {
+    background: #1e293b !important;
+    color: white !important;
+}
+
+.dark-mode .bg-white {
+    background-color: #1e293b !important;
+}
+
+.dark-mode .text-gray-800,
+.dark-mode .text-gray-700,
+.dark-mode .text-gray-600,
+.dark-mode .text-gray-500,
+.dark-mode .text-gray-900 {
+    color: #f1f5f9 !important;
+}
+
+.dark-mode select {
+    background-color: #1e293b !important;
+    color: white !important;
+}
     </style>
 </head>
 
-<body class="text-gray-900">
+<body id="body" class="text-gray-900">
 
     <div id="notification"></div>
 
@@ -96,6 +126,10 @@
                 <button onclick="showPage('prayer')" class="nav-btn px-2 py-1 whitespace-nowrap">المواقيت</button>
                 <button onclick="showPage('azkar')" class="nav-btn px-2 py-1 whitespace-nowrap">المسبحة</button>
                 <button onclick="showPage('names')" class="nav-btn px-2 py-1 whitespace-nowrap">أسماء الله</button>
+                <button onclick="toggleTheme()" 
+class="px-3 py-1 rounded-lg bg-gray-200 text-black">
+🌙
+</button>
             </div>
         </div>
     </nav>
@@ -428,6 +462,20 @@ function shareAyah() {
 }
 
 // تشغيل الموقع عند التحميل
+function toggleTheme() {
+
+    document.body.classList.toggle('dark-mode');
+
+    if(document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+    } else {
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+if(localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+}
 document.addEventListener('DOMContentLoaded', init);
 </script>
 
