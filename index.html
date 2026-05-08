@@ -112,10 +112,71 @@
 .dark-mode #azkar-page button:hover {
     background-color: #0f766e !important;
 }
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:scale(0.9);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes fadeOut{
+    from{
+        opacity:1;
+    }
+    to{
+        opacity:0;
+    }
+}
         </style>
     </head>
 
     <body id="body" class="text-gray-900">
+        <!-- Splash Screen -->
+<div id="splash-screen"
+style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:99999;
+animation:fadeIn 1s;
+">
+
+    <img src="logo.png"
+    style="
+    width:180px;
+    height:180px;
+    border-radius:40px;
+    ">
+
+    <h1 style="
+    color:#D4AF37;
+    font-size:55px;
+    margin-top:20px;
+    font-weight:bold;
+    ">
+        هداية
+    </h1>
+
+    <p style="
+    color:#D4AF37;
+    font-size:22px;
+    font-weight:bold;
+    ">
+        By ANIS
+    </p>
+
+</div>
 
         <div id="notification"></div>
 
@@ -556,6 +617,23 @@ if (currentRiwaya === 'hafs') {
         document.body.classList.add('dark-mode');
     }
     document.addEventListener('DOMContentLoaded', init);
+    window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        const splash = document.getElementById("splash-screen");
+
+        splash.style.animation = "fadeOut 1s forwards";
+
+        setTimeout(() => {
+
+            splash.style.display = "none";
+
+        },1000);
+
+    },2000);
+
+});
     </script>
 
     <!-- Footer -->
