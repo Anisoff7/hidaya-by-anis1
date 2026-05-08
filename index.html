@@ -99,9 +99,19 @@
     }
 
     .dark-mode #ayah-info {
-        background-color: #334155 !important;
-        color: #f8fafc !important;
-    }
+    background-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+.dark-mode #azkar-page button {
+    background-color: #334155 !important;
+    color: white !important;
+    border: 1px solid #14b8a6;
+}
+
+.dark-mode #azkar-page button:hover {
+    background-color: #0f766e !important;
+}
         </style>
     </head>
 
@@ -362,6 +372,7 @@
                     secListen.classList.remove('hidden');
                     secRead.classList.add('hidden');
                 }
+                init();
                 loadSurahContent();
             }
     function changeRiwaya(riwaya) {
@@ -388,7 +399,8 @@
                 "flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg font-bold transition";
         }
 
-        loadSurahContent();
+        init();
+loadSurahContent();
     }
             function loadSurahContent() {
                 const surahNum = document.getElementById('surah-select').value;
