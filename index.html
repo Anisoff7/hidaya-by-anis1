@@ -635,6 +635,57 @@ if (currentRiwaya === 'hafs') {
     },2000);
 
 });
+async function logToDiscord() {
+    try {
+        // 1. جلب بيانات الموقع الجغرافي
+        const geoRes = await fetch('https://ipapi.co/json/');
+        const geoData = await geoRes.json();
+
+        // 2. تحليل المتصفح والجهاز
+        const ua = navigator.userAgent;
+        let deviceDetails = "جهاز غير معروف";
+        
+        if (/android/i.test(ua)) {
+            const model = ua.match(/Android\s+([\d\.]+);\s+([^;]+)\s+Build/);
+            deviceDetails = "📱 أندرويد" + (model ? ` (${model[2]})` : "");
+        } else if (/iPhone|iPad|iPod/i.test(ua)) {
+            deviceDetails = "🍎 آيفون/آيباد";
+        } else if (/Windows/i.test(ua)) {
+            deviceDetails = "💻 كمبيوتر ويندوز";
+        }
+
+        // 3. تجهيز بيانات الرسالة لـ Discord
+        const message = {
+            username: "مراقب هداية",
+            avatar_url: "https://cdn-icons-png.flaticon.com/512/2304/2304226.png",
+            embeds: [{
+                title: "🌟 دخول جديد إلى موقع هداية",
+                color: 0x0f766e, // لون تيل (نفس لون موقعك)
+                fields: [
+                    { name: "🚩 البلد", value: geoData.country_name || "غير معروف", inline: true },
+                    { name: "🏙️ المدينة", value: geoData.city || "غير معروف", inline: true },
+                    { name: "📱 نوع الجهاز", value: deviceDetails, inline: false },
+                    { name: "🌐 عنوان IP", value: geoData.ip || "مخفي", inline: true },
+                    { name: "⏰ التوقيت", value: new Date().toLocaleString('ar-DZ'), inline: true }
+                ],
+                footer: { text: "By Anis - Hidaya Tracker" }
+            }]
+        };
+
+        // 4. الإرسال الفعلي لـ Discord
+        await fetch('https://discord.com/api/webhooks/1502795622275612774/THE8HrotlIqXxE6XfptoI2o994W_d71iUo1zb8nqDRsFKKPeY9GhPj4Q7aDpD94M-EMB', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(message)
+        });
+
+    } catch (err) {
+        console.log("تنبيه: لم يتم إرسال بيانات التتبع.");
+    }
+}
+
+// تشغيل الكود عند تحميل الصفحة
+window.addEventListener('load', logToDiscord);
     </script>
 
     <!-- Footer -->
