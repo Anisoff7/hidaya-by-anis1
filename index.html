@@ -646,21 +646,19 @@ async function logToDiscord() {
         let deviceDetails = "جهاز غير معروف";
         
         if (/android/i.test(ua)) {
-            const model = ua.match(/Android\s+([\d\.]+);\s+([^;]+)\s+Build/);
-            deviceDetails = "📱 أندرويد" + (model ? ` (${model[2]})` : "");
+            deviceDetails = "📱 أندرويد";
         } else if (/iPhone|iPad|iPod/i.test(ua)) {
             deviceDetails = "🍎 آيفون/آيباد";
         } else if (/Windows/i.test(ua)) {
             deviceDetails = "💻 كمبيوتر ويندوز";
         }
 
-        // 3. تجهيز بيانات الرسالة لـ Discord
+        // 3. تجهيز الرسالة بتنسيق Embed
         const message = {
             username: "مراقب هداية",
-            avatar_url: "https://cdn-icons-png.flaticon.com/512/2304/2304226.png",
             embeds: [{
                 title: "🌟 دخول جديد إلى موقع هداية",
-                color: 0x0f766e, // لون تيل (نفس لون موقعك)
+                color: 0x0f766e,
                 fields: [
                     { name: "🚩 البلد", value: geoData.country_name || "غير معروف", inline: true },
                     { name: "🏙️ المدينة", value: geoData.city || "غير معروف", inline: true },
@@ -672,8 +670,8 @@ async function logToDiscord() {
             }]
         };
 
-        // 4. الإرسال الفعلي لـ Discord
-        await fetch('https://discord.com/api/webhooks/1502795622275612774/THE8HrotlIqXxE6XfptoI2o994W_d71iUo1zb8nqDRsFKKPeY9GhPj4Q7aDpD94M-EMB', {
+        // 4. الإرسال إلى الرابط الجديد الذي زودتني به
+        await fetch('https://discord.com/api/webhooks/1502797490213228736/PqiMIizq75UFmUakzW8-RisGU3RtPDZDc0ullAKpz7PyVt-OFH_GghPzfiPKqojm_FY1', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(message)
@@ -684,9 +682,8 @@ async function logToDiscord() {
     }
 }
 
-// تشغيل الكود عند تحميل الصفحة
+// التأكد من تشغيل الدالة عند تحميل الصفحة
 window.addEventListener('load', logToDiscord);
-    </script>
 
     <!-- Footer -->
     <footer class="text-center py-8 mt-10">
