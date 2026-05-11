@@ -99,85 +99,13 @@
     }
 
     .dark-mode #ayah-info {
-    background-color: #334155 !important;
-    color: #f8fafc !important;
-}
-
-.dark-mode #azkar-page button {
-    background-color: #334155 !important;
-    color: white !important;
-    border: 1px solid #14b8a6;
-}
-
-.dark-mode #azkar-page button:hover {
-    background-color: #0f766e !important;
-}
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:scale(0.9);
+        background-color: #334155 !important;
+        color: #f8fafc !important;
     }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
-@keyframes fadeOut{
-    from{
-        opacity:1;
-    }
-    to{
-        opacity:0;
-    }
-}
         </style>
     </head>
 
     <body id="body" class="text-gray-900">
-        <!-- Splash Screen -->
-<div id="splash-screen"
-style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:white;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:99999;
-animation:fadeIn 1s;
-">
-
-    <img src="./logo.png"
-style="
-width:180px;
-height:180px;
-border-radius:40px;
-object-fit:cover;
-">
-
-    <h1 style="
-    color:#D4AF37;
-    font-size:55px;
-    margin-top:20px;
-    font-weight:bold;
-    ">
-        هداية
-    </h1>
-
-    <p style="
-    color:#D4AF37;
-    font-size:22px;
-    font-weight:bold;
-    ">
-        By ANIS
-    </p>
-
-</div>
 
         <div id="notification"></div>
 
@@ -434,7 +362,6 @@ object-fit:cover;
                     secListen.classList.remove('hidden');
                     secRead.classList.add('hidden');
                 }
-                init();
                 loadSurahContent();
             }
     function changeRiwaya(riwaya) {
@@ -461,8 +388,7 @@ object-fit:cover;
                 "flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg font-bold transition";
         }
 
-        init();
-loadSurahContent();
+        loadSurahContent();
     }
             function loadSurahContent() {
                 const surahNum = document.getElementById('surah-select').value;
@@ -479,7 +405,22 @@ if (currentRiwaya === 'hafs') {
 
 } else {
 
-    audioUrl = `https://raw.githubusercontent.com/anisbk167/quran-warsh/main/${formattedNum}.mp3`;
+    if (formattedNum === "001") {
+
+        audioUrl = "https://raw.githubusercontent.com/anisbk167/quran-warsh/main/001.mp3";
+
+    } else if (formattedNum === "002") {
+
+        audioUrl = "https://raw.githubusercontent.com/anisbk167/quran-warsh/main/002.mp3";
+
+    } else if (formattedNum === "003") {
+
+        audioUrl = "https://raw.githubusercontent.com/anisbk167/quran-warsh/main/003.mp3";
+
+    } else {
+
+        audioUrl = `https://server8.mp3quran.net/afs/${formattedNum}.mp3`;
+    }
 }
 
     document.getElementById('player').src = audioUrl;
@@ -618,72 +559,7 @@ if (currentRiwaya === 'hafs') {
         document.body.classList.add('dark-mode');
     }
     document.addEventListener('DOMContentLoaded', init);
-    window.addEventListener("load", () => {
-
-    setTimeout(() => {
-
-        const splash = document.getElementById("splash-screen");
-
-        splash.style.animation = "fadeOut 1s forwards";
-
-        setTimeout(() => {
-
-            splash.style.display = "none";
-
-        },1000);
-
-    },2000);
-
-});
-async function logToDiscord() {
-    try {
-        // 1. جلب بيانات الموقع الجغرافي
-        const geoRes = await fetch('https://ipapi.co/json/');
-        const geoData = await geoRes.json();
-
-        // 2. تحليل المتصفح والجهاز
-        const ua = navigator.userAgent;
-        let deviceDetails = "جهاز غير معروف";
-        
-        if (/android/i.test(ua)) {
-            deviceDetails = "📱 أندرويد";
-        } else if (/iPhone|iPad|iPod/i.test(ua)) {
-            deviceDetails = "🍎 آيفون/آيباد";
-        } else if (/Windows/i.test(ua)) {
-            deviceDetails = "💻 كمبيوتر ويندوز";
-        }
-
-        // 3. تجهيز الرسالة بتنسيق Embed
-        const message = {
-            username: "مراقب هداية",
-            embeds: [{
-                title: "🌟 دخول جديد إلى موقع هداية",
-                color: 0x0f766e,
-                fields: [
-                    { name: "🚩 البلد", value: geoData.country_name || "غير معروف", inline: true },
-                    { name: "🏙️ المدينة", value: geoData.city || "غير معروف", inline: true },
-                    { name: "📱 نوع الجهاز", value: deviceDetails, inline: false },
-                    { name: "🌐 عنوان IP", value: geoData.ip || "مخفي", inline: true },
-                    { name: "⏰ التوقيت", value: new Date().toLocaleString('ar-DZ'), inline: true }
-                ],
-                footer: { text: "By Anis - Hidaya Tracker" }
-            }]
-        };
-
-        // 4. الإرسال إلى الرابط الجديد الذي زودتني به
-        await fetch('https://discord.com/api/webhooks/1502797490213228736/PqiMIizq75UFmUakzW8-RisGU3RtPDZDc0ullAKpz7PyVt-OFH_GghPzfiPKqojm_FY1', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(message)
-        });
-
-    } catch (err) {
-        console.log("تنبيه: لم يتم إرسال بيانات التتبع.");
-    }
-}
-
-// التأكد من تشغيل الدالة عند تحميل الصفحة
-window.addEventListener('load', logToDiscord);
+    </script>
 
     <!-- Footer -->
     <footer class="text-center py-8 mt-10">
